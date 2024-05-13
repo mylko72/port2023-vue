@@ -1,0 +1,177 @@
+// @font-face {
+//     font-display: swap;
+//     font-family: "Oswald";
+//     font-style: normal;
+//     font-weight: 700;
+//     src: local("Oswald Bold"), url('/content/dam/channel/wcms/de/monthlylg/fonts/Oswald-Bold.woff2') format("woff");
+// }
+
+// @font-face {
+//     font-display: swap;
+//     font-family: "Oswald";
+//     font-style: normal;
+//     font-weight: 500;
+//     src: local("Oswald-Medium"),url('/content/dam/channel/wcms/de/monthlylg/fonts/Oswald-Medium.woff2') format("woff");
+// }
+
+// @font-face {
+//     font-display: swap;
+//     font-family: "Oswald";
+//     font-style: normal;
+//     font-weight: 400;
+//     src: local("Oswald-Regular"),url('/content/dam/channel/wcms/de/monthlylg/fonts/Oswald-Regular.woff2') format("woff");
+// }
+
+@function vw($target, $deviceWidth:1920px) {
+    @if $deviceWidth == mo {
+        $deviceWidth: 360px;
+    }
+    @else if number == type-of($deviceWidth) {
+        $deviceWidth: $deviceWidth;
+    }
+    @return calc(($target*100) / $deviceWidth) * 1vw;
+}
+
+@function rem($target) {
+	@return calc($target / 16px) * 1rem;
+}
+
+@mixin ellipsis($line: 1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @if 1 == $line {
+        white-space: nowrap;
+    }
+    @if 1 < $line {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: $line;
+    }
+}
+
+$font-headline: LGEI Headline, Segoe UI, "Microsoft Sans Serif",sans-serif;
+$font-smart: LG Smart UI,Segoe UI,"Microsoft Sans Serif",sans-serif;
+$font-roboto: "Roboto Serif",Segoe UI,"Microsoft Sans Serif",sans-serif;
+
+@mixin headline {
+    font-family: $font-headline
+}
+@mixin smartui {
+    font-family: $font-smart
+}
+
+$tabletSize: 1279px !default;
+$mobileSize: 768px !default;
+$mobileSize2: 360px !default;
+$minimumSize: 320px !default;
+
+
+.align-c {text-align:center}
+.bold {font-weight: 800;}
+.point {font-weight: 800; color: #e9e4c3}
+.monthly-position--relative {position: relative}
+
+.swiper-watch-progress .swiper-slide-visible .swiper-lazy-preloader,
+.swiper:not(.swiper-watch-progress) .swiper-lazy-preloader {
+    display: none;
+}
+
+.monthly__mask {
+    position: static; display:inline-block; opacity:1; overflow: hidden;
+    .span-txt {transform: translate(vw(-153px), 0);}
+    [class*="slide"] {opacity:1; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0s; transform-style:preserve-3d; will-change: transform, opacity, filter}
+}
+
+[data-effect] {opacity:0; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0s; transform-style:preserve-3d; will-change: transform, opacity, filter}
+[data-split-txt] {display:none; font-size:0 !important; color:transparent !important;}
+[data-split-effect] {
+    position: relative;
+
+    .monthly__mask {
+        position: absolute; left:0; right:0; top:0; bottom:0; display:flex;
+
+        .fade {background-color: #f0ece4; opacity:1}
+        .curtain {
+            background-color: #f0ece4; opacity:1;
+            &.show-in {opacity:0; transform: rotateY(180deg) !important; backface-visibility:hidden;} 
+        }
+        .show-in {opacity:0 !important}
+    }
+}
+[data-slide-height] {
+    height:0; overflow:hidden;
+    img.fixed {position:absolute; left:0; top:0; width:100%; height:100%; max-width:none; object-fit:cover; transition:all 1.5s}
+}
+[data-slide-width] {
+    width:0; overflow:hidden;
+    img.fixed {position:absolute; left:0; top:0; width:100%; height:100%; max-width:none; object-fit:cover; transition:all 1.5s}
+}
+
+/* 아래에서 위로 페이드 인 */
+.slide-up {transform: translate(0, vw(50px));}
+/* 위에서 아래로 페이드 인 */
+.slide-down {transform: translate(0, vw(-50px));}
+/* 왼쪽에서 오른쪽으로 */
+.slide-right {transform: translate(vw(-100px), 0);}
+/* 오른쪽에서 왼쪽으로 */
+.slide-left {transform: translate(vw(100px), 0);}
+/* 작아진 상태에서 커지면서 */
+.scale-up {transform: scale(1.2);}
+/* 커진 상태에서 작아지면서 */
+.scale-down {transform: scale(.8);}
+.scale-move {transform: translate3d(-10%, -10%, 0) scale3d(1.2, 1.2, 1) !important}
+
+.show-in {
+    opacity:1 !important; transform:none !important;
+
+    [class*="scale"] {opacity:1; transform:none;}
+    [class*="slide"] {opacity:1; transform:none !important;}
+}
+
+.bounceInDown {
+    animation-name: bounceInDown;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.monthly {
+    &__container {
+        * {
+            margin:0; 
+            padding:0; 
+            box-sizing:border-box
+        }
+        ul, 
+        ol {
+            list-style: none; margin: 0;
+        }
+        img {
+            max-width: 100%; 
+            height: auto; 
+            border: 0;
+        }
+        button {
+            border:none; 
+            background-color: transparent;
+        }
+    }
+
+    &__mask {
+        [class*="slide"] {opacity:1; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0s; transform-style:preserve-3d; will-change: transform, opacity, filter}
+    }
+}
+
+@media(max-width: $mobileSize) { //mobile 768
+    .monthly__mask {
+        .span-txt {transform: translate(vw(-153px, mo), 0);}
+    }
+
+    /* 아래에서 위로 페이드 인 */
+    .slide-up {transform: translate(0, vw(50px, mo));}
+    /* 위에서 아래로 페이드 인 */
+    .slide-down {transform: translate(0, vw(-50px, mo));}
+    /* 왼쪽에서 오른쪽으로 */
+    .slide-right {transform: translate(vw(-100px, mo), 0);}
+    /* 오른쪽에서 왼쪽으로 */
+    .slide-left {transform: translate(vw(100px, mo), 0);}
+}

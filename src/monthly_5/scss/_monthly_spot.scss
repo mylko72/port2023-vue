@@ -1,0 +1,293 @@
+@charset 'UTF-8';
+.monthly {
+    &-gallery-spot {
+        position: relative;
+        max-width: vw(1920px);
+        margin: 0 auto;
+
+        .arrow {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            transform: translateX(-50%);
+            border-width: vw(22px) vw(16px);
+            border-style: solid;
+            border-color: transparent transparent #fff transparent;
+            z-index: 11;
+            display: none;
+        }
+
+        &__image {
+            width: 100%;
+
+            img {
+                width: 100%;
+            }
+        }
+        
+        .monthly__container &__cta {
+            position: absolute;
+            width: vw(60px);
+            height: vw(60px);
+            padding: 0;
+            border-radius: 50%;
+            background-color: #ea1917;
+            border: 0;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+
+            &:before,
+            &:after {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                display: block;
+                width: vw(32px);
+                height: vw(2px);
+                background-color: #fff;
+                transform: translate(-50%, -50%);
+                content: '';
+            }
+
+            &:after {
+                transform: translate(-50%, -50%) rotate(90deg);
+            }
+        }
+
+        &-layer {
+            display: none;
+            position: fixed;
+            width: vw(480px);
+            z-index: 30;
+            transform: translate(calc(-50% + vw(30px)), vw(102px));
+            padding-top: vw(80px);
+            margin-top: vw(-80px);
+
+            .arrow {
+                position: absolute;
+                bottom: calc(100% - vw(82px));
+                left: 50%;
+                width: 0;
+                height: 0;
+                transform: translateX(-50%);
+                border-width: vw(22px) vw(16px);
+                border-style: solid;
+                border-color: transparent transparent #fff transparent;
+                z-index: 11;
+            }
+
+            &--left {
+                width: vw(560px);
+                transform: translate(calc(-100% + vw(38px)), calc(-50% + vw(30px)));
+                padding-top: 0;
+                margin-top: 0;
+                padding-right: vw(80px);
+                margin-right: vw(-80px);
+
+                .arrow {
+                    left: 100%;
+                    bottom: 50%;
+                    transform: translate(vw(-82px), 50%);
+                    border-width: vw(16px) vw(22px);
+                    border-color: transparent transparent transparent #fff;
+                }
+            }
+
+            &--right {
+                width: vw(560px);
+                transform: translate(vw(102px), calc(-50% + vw(30px)));
+                padding-left: vw(80px);
+                margin-left: vw(-80px);
+                padding-top: 0;
+                margin-top: 0;
+
+                .arrow {
+                    left: 0;
+                    bottom: 50%;
+                    transform: translate(calc(-100% + vw(80px)), 50%);
+                    margin-left: vw(2px);
+                    border-width: vw(16px) vw(22px);
+                    border-color: transparent #fff transparent transparent ;
+                }
+            }
+
+            &__inner {
+                position: relative;
+                display: flex;
+                border-radius: vw(28px);
+                box-shadow: vw(2px) vw(2px) vw(8px) rgba(99,98,95,.2);
+                max-width: vw(480px);
+                padding: vw(40px) vw(24px) vw(30px);
+                background-color: #fff;
+            }
+
+            &__image {
+                width: vw(140px);
+            }
+
+            &__content {
+                width: calc(100% - vw(140px));
+                padding-left: 1.25rem;
+
+                .sku {
+                    display: block;
+                    width: 100%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    font-size: vw(16px);
+                    line-height: 1.25;
+                    color: #767676;
+                }
+
+                .name {
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    display: block;
+                    display: -webkit-box;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-size: vw(24px);
+                    line-height: 1.167;
+                }
+            }
+
+            .cta-wrap {
+                margin-top: vw(20px);
+
+                .c-button {
+                    height: vw(44px);
+                    padding: 0 vw(20px);
+                    font-size: vw(16px);
+                }
+            }
+            &__close {
+                position: absolute;
+                right: vw(8px);
+                top: vw(8px);
+                display: flex;
+                width: vw(44px);
+                height: vw(44px);
+                padding: 0;
+                background: none;
+                border: 0;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+
+                &:before {
+                    content: "";
+                    display: block;
+                    height: vw(12px);
+                    width: vw(12px);
+                    background-image: url('https://www.lg.com/etc.clientlibs/lge/clientlibs/clientlib-site/resources/images/icon/icon-close-black-12-12.svg');
+                    background-position: 100%;
+                    background-repeat: no-repeat;
+                    background-size: 100%;
+                }
+            }
+        }
+    }
+}
+@media(max-width: 768px) {
+    .monthly {
+        &-gallery-spot {
+            max-width: 100%;
+    
+            .arrow {
+                transform: translateX(-50%);
+                border-width: rem(22px) rem(16px);
+            }
+    
+            .monthly__container &__cta {
+                width: vw(32px, 360px);
+                height: vw(32px, 360px);
+    
+                &:before,
+                &:after {
+                    width: vw(20px, 360px);
+                    height: vw(2px, 360px)
+                }
+            }
+            &-layer {
+                max-width: rem(506px);
+                width: vw(328px, 360px);
+                transform: translateY(rem(32px));
+                margin-top: rem(-54px);
+                padding-top: rem(54px);
+    
+                .arrow {
+                    transform: translateX(-50%);
+                    bottom: calc(100% - rem(56px));
+                    border-width: rem(22px) rem(16px);
+                    border-style: solid;
+                    border-color: transparent transparent #fff transparent;
+                    z-index: 11;
+                }
+    
+                &__inner {
+                    max-width: 100%;
+                    width: calc(100vw - vw(32px, 360px));
+                    padding: rem(40px) rem(24px) rem(30px);
+                    border-radius: rem(20px);
+                    box-shadow: rem(2px) rem(2px) rem(8px) rgba(99,98,95,.2);
+                }
+    
+                &__image {
+                    width: 33.84%;
+                    min-width: rem(80px);
+                    // width: rem(80px);
+                }
+                
+                &__content {
+                    width: 66%;
+                    // width: calc(100% - rem(80px));
+                    padding-left: rem(10px);
+    
+                    .sku {
+                        font-size: rem(16px);
+                    }
+    
+                    .name {
+                        font-size: rem(24px);
+                        line-height: calc(28/24);
+                    }
+                }
+    
+                .cta-wrap {
+                    margin-top: rem(20px);
+
+                    .c-button {
+                        width: 100%;
+                        height: rem(44px);
+                        padding: 0 rem(10px);
+                        font-size: rem(16px);
+                    }
+                }
+    
+                &__close {
+                    top: 0;
+                    right: 0;
+                    width: rem(44px);
+                    height: rem(44px);
+    
+                    &:before {
+                        height: rem(12px);
+                        width: rem(12px);
+                    }
+                }
+            }
+        }
+    }
+}
+@media(max-width: 360px) {
+    .monthly {
+        &-gallery-spot-layer {
+            .name {
+                font-size: vw(24px, 360px);
+            }
+        }
+    }
+}

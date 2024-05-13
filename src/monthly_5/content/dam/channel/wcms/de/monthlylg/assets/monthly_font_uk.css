@@ -1,0 +1,24 @@
+@charset "UTF-8";
+@font-face {
+  font-display: swap;
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Oswald Bold"), url('/content/dam/channel/wcms/uk/monthlylg/fonts/Oswald-Bold.woff2') format("woff");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 500;
+  src: local("Oswald-Medium"),url('/content/dam/channel/wcms/uk/monthlylg/fonts/Oswald-Medium.woff2') format("woff");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Oswald-Regular"),url('/content/dam/channel/wcms/uk/monthlylg/fonts/Oswald-Regular.woff2') format("woff");
+}
