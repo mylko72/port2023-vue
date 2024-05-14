@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         @charset 'utf-8';
+
+         html {
+            font-family: 'Apple SD Gothic Neo', Roboto, 'Noto Sans KR', NanumGothic, 'Malgun Gothic', sans-serif;
+            line-height: 1.2;
+            word-wrap: break-word;
+         }
+         body {
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+         }
+         html, body, div, span, applet, object, iframe,
+         h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+         a, abbr, acronym, address, big, cite, code,
+         del, dfn, em, img, ins, kbd, q, s, samp,
+         small, strike, strong, sub, sup, tt, var,
+         b, u, i, center,
+         dl, dt, dd, ol, ul, li,
+         fieldset, form, label, legend,
+         table, caption, tbody, tfoot, thead, tr, th, td,
+         article, aside, canvas, details, embed,
+         figure, figcaption, footer, header, hgroup,
+         menu, nav, output, ruby, section, summary,
+         time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+         }
+         article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+            display: block;
+         }
+         div, span, article, section, header, footer, aside, p, ul, li, fieldset, legend, label, a, nav, form {
+            box-sizing: border-box;
+         }
+         ol, ul, li {
+            list-style: none;
+         }
+         table {
+            border-collapse: collapse;
+            border-spacing: 0;
+         }
+         img {
+            max-width: 100%;
+            height: auto;
+            border: 0;
+         }
+         button {
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+         }
+        
+        #navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 10;
+            background-color: #222;
+            color: #fff;
+         }
+         #navbar ul {
+            padding: 0;
+            margin: 0;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+         }
+         #navbar li {
+            list-style: none;
+            padding: 1em;
+            text-transform: uppercase;
+            background: #222;
+            color: #fff;
+            transition: all .2s linear;
+         }
+         #navbar li a {color:#fff}
+         #navbar #nav-section-0.active {
+            background: #000;
+         }
+         #navbar #nav-section-1.active {
+            background: rgb(0,106,221);
+         }
+         #navbar #nav-section-2.active {
+            background: rgb(255,25,129);
+         }
+         #navbar #nav-section-3.active {
+            background: #fff;
+            color: #222;
+         }
+         #navbar #nav-section-4.active {
+            background: #333;
+         }        
+         #navbar #nav-section-5.active {
+            background: #e43737;
+         }   
+         #navbar #nav-section-6.active {
+            background: #2ecb26;
+         }   
+         #navbar #nav-section-7.active {
+            background: #b2cb26;
+         }
+         #navbar #nav-section-8.active {
+            background: #fff;
+            color: #222;
+         }       
+         
+         .mousey {
+            position:absolute;
+            left:50%;
+            bottom:10%;
+            transform: translateX(-50%);
+            width: 3px;
+            padding: 10px 15px;
+            height: 35px;
+            border: 2px solid #fff;
+            border-radius: 25px;
+            opacity: 0.75;
+            box-sizing: content-box;
+         }
+         .scroller {
+            width: 3px;
+            height: 10px;
+            border-radius: 25%;
+            background-color: #fff;
+            animation-name: scroll;
+            animation-duration: 2.2s;
+            animation-timing-function: cubic-bezier(.15,.41,.69,.94);
+            animation-iteration-count: infinite;
+         }
+         @keyframes scroll {
+            0% { opacity: 0; }
+            10% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(15px); opacity: 0;}
+         }    
+         
+         .sticky-elem {display:none; position:fixed; top:0; left:0; width:100%; height:100%;}
+         .sticky-elem .tit {display:flex; height:100%; justify-content:center; align-items:center; font-size:8rem; color:#000; opacity:.1; font-weight:bold;}        
+
+         .main-message {
+            display: flex;
+            align-items: center;
+            /* justify-content: center; */
+            top: 35vh;
+            left: 0;
+            margin: 5px 0;
+            height: 3em;
+            font-size: 3.5vw;
+            opacity: 0;
+            transition: all 0.5s ease-in-out 0s;
+         }
+         .main-message p {
+            font-weight: bold;
+            /* text-align: center; */
+            line-height: 1.2;
+         }
+
+         .scroll-section {position:relative; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; border-bottom:1px solid #ddd; width:100%; min-height:100vh; padding:50px 0; transition:background .5s}
+         .scroll-section .tit {font-size:3.5rem; color:#fff; font-weight:bold; opacity:1}
+         .scroll-section.active {background:rgb(173, 208, 255)}
+         .scroll-section.active .sticky-elem {display:block; will-change:transform, opacity;}
+
+         .responsive-txt {margin-top:20px; color:#000;}
+         .responsive-txt.slide-up {transform:translate(0, 10px)}
+         .responsive-txt.fade-in {transform:translate(0); opacity:1; transition-delay:0.7s}
+         .responsive-img {display:flex; width:100%; padding:0 50px; justify-content:center;}
+         .responsive-img.align-left {justify-content:flex-start;}
+         .responsive-img.align-right {justify-content:flex-end;}
+
+         [data-cmp-effect] {opacity:0; transition: all 0.5s ease-in-out 0s; will-change: transform, opacity, filter}
+
+         img[data-cmp-effect] {filter: blur(10px) drop-shadow(0px 10px 30px rgba(0,0,0,0.35));}
+         img.slide-up {transform:translate(-0.75%, 10px)}
+         img.slide-left {transform:translate(-2.75%, 0)}
+         img.slide-right {transform:translate(2.75%, 0)}
+         img.fade-in {transform:translate(0); opacity:1; transition-delay:0.5s; filter:blur(0) drop-shadow(0px 10px 30px rgba(0, 0, 0, 0.35))}
+
+         .static-obj-row {display:flex; width:100%; margin-top:5vh;}
+         .static-obj-content {width:50%; align-self:flex-start}
+         .static-obj-section {margin-bottom:4vh; padding:0 30px; color:#fff}
+         .static-obj-section > p {margin-bottom:4vh}
+         .static-obj-sticky {width:50%; height:200vh}
+         .static-obj-img {position:sticky; top:0; left:0; width:100%; height:100vh}
+         .static-obj-img img {position:relative; width:100%; height:100vh; left:50%; bottom:0; transform:translateX(-50%); object-fit:cover;}
+         .static-obj-area {position:relative}
+         .static-img-item {position:absolute; width:100%; top:0; will-change: transform, opacity, filter;}
+
+          #scroll-section-0 {background:#000}
+          #scroll-section-1 {background:#006add}
+          #scroll-section-2 {background:#ff1981}
+          #scroll-section-3 {background:#ffffff; height:auto}
+          #scroll-section-3 .tit {color:#000}
+          #scroll-section-4 {background:#333}
+          #scroll-section-5 {background:#e43737; height:auto; justify-content:flex-start; padding:50px 30px}
+          #scroll-section-6 {background:#2ecb26; height:auto; padding:50px 0}
+          #scroll-section-7 {background:#b2cb26; height:auto; padding:0}
+          #scroll-section-8 {background:#fff; padding:0}
+
+         #scroll-section-0 .sticky-elem .tit {color:#fff}
+         #scroll-section-0 .main-message {flex-direction:column; align-items: flex-start; color:#fff}
+         #scroll-section-0 .hero-img {
+            width: 100%;
+            height:100vh;
+            background: url(https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2123325057BB118015) no-repeat 50% 50%;
+            background-size: cover;
+            transition:all .5s ease-in-out 0s
+         }
+
+         #scroll-section-0 .hero-img img {position:relative; width:100%; height:100vh; left:50%; bottom:0; transform:translateX(-50%); object-fit:cover;}
+         #scroll-section-0 .hero-item {position:absolute; left:0; width:100%; height:100vh; opacity:0; transition:opacity 1s ease-in-out 0s}
+         #scroll-section-0 .hero-item.fade-in {opacity:1;}
+         #scroll-section-0 .hero-item.z-idx {z-index:10}
+         #scroll-section-0 .main-message.title {display:none; top:50vh; left:50%; width:80%; height:auto; transform:translate(-50%, -50%); opacity:1; font-size:5vw; text-align:center; word-break: keep-all; overflow:hidden; transition: all .5s ease-in-out 0s;} 
+         #scroll-section-0 .main-message.title h1 {display:flex; justify-content: space-around;}
+         #scroll-section-0 .main-message.title h1 > span {transform:translateY(15vh); transition: transform .5s ease-in-out 1.5s}
+         #scroll-section-0 .main-message.title h1 > span:last-child {transition-delay: 1.7s}
+         #scroll-section-0 .main-message.title .h-line {position: relative; bottom:1px; width:0; height:1px; background:#fff; transition: width 1s ease-in-out 1s;}
+         #scroll-section-0 .main-message.txt-a, #scroll-section-0 .main-message.txt-b {margin-left:5vw}
+         #scroll-section-0.active .main-message.title.fade-out {opacity:0; transform:translate(-50%, -100%);}
+         #scroll-section-0.active .main-message.title h1 > span {transform:translateY(0vh);}
+         #scroll-section-0.active .main-message.title .h-line {width:100%}
+
+         #scroll-section-1 .hero-img {display:block; position:absolute; left:0; top:0; width:100%; height:100vh; opacity:1; transition:opacity 1s ease-in-out 0s}
+         #scroll-section-1 .hero-img:before {position:absolute; left:0; width:100%; height:100%; z-index:2; content:''; background-color: rgba(8, 8, 8, .4)}
+         #scroll-section-1 .hero-img img {position:relative; width:100%; height:100%; left:50%; bottom:0; transform:translateX(-50%); object-fit:cover;}
+         #scroll-section-1 .main-message.title {margin-top:10vh; font-size:2.5vw; opacity:1; text-align:center; line-height:1}
+         #scroll-section-1 .responsive-row {position:relative; z-index:5; display:flex; margin-top:10vh;  padding:0 10vw;}
+         #scroll-section-1 .responsive-img {width:50%; height:50vh;}
+         #scroll-section-1 .responsive-img img {object-fit:cover; border-radius: 20px;}
+         #scroll-section-1 .responsive-txt {color:#fff}
+         
+         #scroll-section-3 .c-text-contents {max-width:30%; padding:20px;}
+         #scroll-section-3 .c-text-contents .responsive-txt {margin-top:0; color:#000}
+         #scroll-section-3 .c-text-contents > p {margin-top:20px !important; font-size:1.2rem}
+
+         #scroll-section-4 .cmp-video-wrap {height:100vh; overflow:hidden;}
+
+         #scroll-section-7 .static-obj-scroll {width:100%; height:100%}
+         #scroll-section-7 .static-obj-sticky {width:100%; height:100%}
+         #scroll-section-7 .static-img-item {overflow:hidden; transition: height 0.5s ease-in-out 0s; will-change: height}
+         #scroll-section-7 .static-img-item.item-b {bottom:0; height:0}
+         #scroll-section-7 .static-img-item.item-c {bottom:0; height:0}
+
+         #scroll-section-8 {position: relative;}
+         #scroll-section-8 .static-obj-sticky {position:absolute; left:0; top:0; width:100%; height:100%}
+         #scroll-section-8 .static-img-item {height:100vh; min-width:45vw; min-height:45vh;}
+         #scroll-section-8 .static-obj-img img {left:0; height:100%; transform:translateX(0); will-change: transform, opacity, filter;}
+         #scroll-section-8 .static-obj-content {width:auto; margin-left:50vw; margin-top:200vh;}
+         #scroll-section-8 .static-obj-content .static-obj-section {color:#000}
+
+         #show-scene-0 #scroll-section-0 .sticky-elem.hero-img {display:block}
+         #show-scene-0 #scroll-section-0 .main-message.title {display:block}
+
+         .hacm__swiper {width:100%; padding:0 20vw;}
+         .hacm__swiper .swiper {padding-bottom:100px}
+         .hacm__swiper .swiper-slide {text-align:center;}
+         .hacm__swiper .swiper-pagination {
+            bottom:50px
+         }
+
+         .hacm__swiper .hacm__title {
+            padding: 0 16px
+         }
+      
+         .hacm__swiper .hacm__desc {
+            padding: 0 16px
+         }
+
+         .hacm__swiper .hacm__img:not(:first-child) {
+            margin-top: 10px
+         }
+
+         .hacm__swiper .hacm__img img {
+            border-radius: 0;
+            min-height: 55.56vw
+         }
+
+         .swiper-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            transition-property: transform;
+            box-sizing: content-box
+         }
+
+         .swiper-slide {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition-property: transform
+         }         
+
+     </style>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css" type="text/css">
+     <script defer src="https://www.lg.com/content/dam/channel/wcms/uk/caring-for-what-you-wear/assets/swiper-bundle.min.js"></script>
+     
+</head>
+<body>
+   <header>
+      <nav id="navbar">
+         <ul>
+            <li id="nav-section-0"><a href="#scroll-section-0">First screen</a></li>
+            <li id="nav-section-1"><a href="#scroll-section-1">Second screen</a></li>
+            <li id="nav-section-2"><a href="#scroll-section-2">Third screen</a></li>
+            <li id="nav-section-3"><a href="#scroll-section-3">Fourth screen</a></li>
+            <li id="nav-section-4"><a href="#scroll-section-4">fifth screen</a></li>
+            <li id="nav-section-5"><a href="#scroll-section-5">sixth screen</a></li>
+            <li id="nav-section-6"><a href="#scroll-section-6">seventh screen</a></li>
+            <li id="nav-section-7"><a href="#scroll-section-7">eighth screen</a></li>
+            <li id="nav-section-8"><a href="#scroll-section-8">ninth screen</a></li>
+         </ul>
+      </nav>
+   </header>
+
+   <div id="luxy" class="container">
+      <div id="scroll-section-0" class="scroll-section" data-index="0" data-type="sticky" data-heightNum="5">
+         <div class="sticky-elem hero-img" data-zoom-in='[1, 1.2, { "start": "0.1", "end": "0.9" }]' data-opacity-out='[1, 0, { "start": "0.6", "end": "0.8" }]'>
+            <div class="hero-item">
+               <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F22154C3B57BB13CC28" />
+            </div>
+            <div class="hero-item">
+               <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F271AFA3B57BB13CF23" />
+            </div>
+            <div class="hero-item">
+               <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F24112E5057BB118528" />
+            </div>
+         </div>
+         <div class="sticky-elem main-message title">
+            <h1><span>STORY</span> <span>CONTENT</span></h1>
+            <div class="h-line"></div>
+         </div>
+         <div class="mousey">
+             <div class="scroller"></div>
+         </div>
+         <div class="sticky-elem main-message txt-a" data-translateY-in='[20, 0, { "start": "0.2", "end": "0.3" }]' data-translateY-out='[0, -20, { "start": "0.4", "end": "0.5" }]' data-opacity-in='[0, 1, { "start": "0.2", "end": "0.3" }]' data-opacity-out='[1, 0, { "start": "0.4", "end": "0.5" }]'>
+             <h1>Story 1</h1>
+             <p>Lorem ipsum dolor sit amet,<br />consectetur adipiscing elit,<br />sed do eiusmod tempor incididunt<br />ut labore et dolore magna aliqua.</p>
+         </div>
+         <div class="sticky-elem main-message txt-b" data-translateY-in='[20, 0, { "start": "0.55", "end": "0.65" }]' data-translateY-out='[0, -20, { "start": "0.7", "end": "0.8" }]' data-opacity-in='[0, 1, { "start": "0.55", "end": "0.65" }]' data-opacity-out='[1, 0, { "start": "0.7", "end": "0.8" }]'>
+            <h1>Story 2</h1>
+            <p>Lorem ipsum dolor sit amet,<br />consectetur adipiscing elit,<br />sed do eiusmod tempor incididunt<br />ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+      <div id="scroll-section-1" class="scroll-section" data-index="1">
+         <div class="hero-img">
+            <img src="https://assets-global.website-files.com/65a130d1665dcf56e7426e59/65a1ce73e9f8d53c2fbe9521_pexels-monstera-production-6621191-p-1600.jpg" />
+         </div>
+         <div class="main-message title">
+            <h1 class="responsive-txt slide-up" data-cmp-effect>Rediscover your inner<br />peace and radiance</h1>
+         </div>
+         <div class="responsive-row">
+            <div class="responsive-img">
+               <img class="slide-up" data-src="https://assets-global.website-files.com/65a130d1665dcf56e7426e59/65a802c26e16933fe9d6a105_pexels-rdne-stock-project-6724402.webp" data-cmp-effect />
+            </div>
+            <h2 class="responsive-txt slide-up" data-cmp-effect>50% off Soundbars when you buy an LG TV</h2>
+         </div>
+      </div>
+      <div id="scroll-section-2" class="scroll-section" data-index="2">
+         <h1 class="tit">Section 3</h1>
+         <div class="responsive-img">
+            <img class="slide-image__up" data-src="https://www.lg.com/content/dam/channel/wcms/uk/2023_promotion/elevate-your-home/GNB_620x316_No_Text.jpg" data-cmp-effect />
+         </div>
+         <h2 class="responsive-txt slide-up" data-cmp-effect>Transforming living rooms one TV at a time 🏡</h2>
+      </div>
+      <div id="scroll-section-3" class="scroll-section" data-index="3">
+         <h1 class="tit">Section 4</h1>
+         <div class="responsive-img align-left">
+            <img class="slide-image__left" data-src="https://www.lg.com/content/dam/channel/wcms/uk/2024-promotions/10-off-tvs/620x316.jpg" data-cmp-effect />
+            <div class="c-text-contents">
+               <h2 class="responsive-txt slide-up" data-cmp-effect>THE PURSUIT OF LUXURY LIVING</h2>
+               <p class="responsive-txt slide-up" data-cmp-effect>The LG SIGNATURE range combines cutting-edge innovation with timeless craftsmanship.
+               Browse our full product lineup.</p>
+            </div>
+         </div>
+         <div class="responsive-img align-right">
+            <div class="c-text-contents">
+               <h2 class="responsive-txt slide-up" data-cmp-effect>THE PURSUIT OF LUXURY LIVING</h2>
+               <p class="responsive-txt slide-up" data-cmp-effect>The LG SIGNATURE range combines cutting-edge innovation with timeless craftsmanship.
+               Browse our full product lineup.</p>
+            </div>
+            <img class="slide-image__right" data-src="https://www.lg.com/content/dam/channel/wcms/uk/2024-promotions/ultragear-27gr95ql/620x316.jpg" data-cmp-effect />
+         </div>
+      </div>
+      <div id="scroll-section-4" class="scroll-section" data-index="4">
+         <h1 class="tit">Section 5</h1>
+         <div class="cmp-video-wrap">
+            <video class="pc_only" muted loop playsinline poster="https://www.lg.com/uk/lg-signature/images/kv/kv_sld_bg2_220118.jpg" data-loaded="false" data-observe="true">
+               <source src="" type="video/mp4" data-src="https://www.lg.com/uk/lg-signature/images/kv/kv_sld_bg2_220121.mp4" />
+            </video>
+         </div>
+      </div>
+      <div id="scroll-section-5" class="scroll-section" data-index="5">
+         <h1 class="tit">Section 6</h1>
+         <div class="static-obj-scroll">
+            <div class="static-obj-row">
+               <div class="static-obj-content">
+                  <div class="static-obj-section">
+                     <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
+                     <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                     <h2>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+                     <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+                     <h2>1914 translation by H. Rackham</h2>
+                     <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
+                  </div>
+                  <div class="static-obj-section">
+                     <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
+                     <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                     <h2>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+                     <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+                     <h2>1914 translation by H. Rackham</h2>
+                     <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
+                  </div>
+                  <div class="static-obj-section">
+                     <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
+                     <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                     <h2>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+                     <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+                     <h2>1914 translation by H. Rackham</h2>
+                     <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
+                  </div>
+               </div>
+               <div class="static-obj-sticky">
+                  <div class="static-obj-img">
+                     <div class="static-obj-area">
+                        <div class="static-img-item">
+                           <picture><img src="https://www.lg.com/content/dam/lge/common/cinebeam/images/cinebeam_lifestyle_pc_01.jpg" /></picture>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="static-obj-row">
+               <div class="static-obj-sticky">
+                  <div class="static-obj-img">
+                     <div class="static-obj-area">
+                        <div class="static-img-item">
+                           <picture><img src="https://www.lg.com/content/dam/lge/common/cinebeam/images/cinebeam_lifestyle_pc_02.jpg" /></picture>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="static-obj-content">
+                  <div class="static-obj-section">
+                     <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
+                     <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                     <h2>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+                     <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+                     <h2>1914 translation by H. Rackham</h2>
+                     <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
+                  </div>
+                  <div class="static-obj-section">
+                     <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
+                     <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                     <h2>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+                     <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+                     <h2>1914 translation by H. Rackham</h2>
+                     <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
+                  </div>
+                  <div class="static-obj-section">
+                     <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
+                     <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                     <h2>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+                     <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+                     <h2>1914 translation by H. Rackham</h2>
+                     <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="scroll-section-6" class="scroll-section" data-index="6">
+         <h1 class="tit">Section 7</h1>
+          <div class="hacm__swiper">
+            <div class="swiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <h2 class="hacm__title">Discover the Hidden Delights of Mindful Wearing</h2>
+                  <div class="hacm__img">
+                    <img src="https://thumb.sprinklr.com/?d=640x640&url=https%3A%2F%2Fsprcdn-assets.sprinklr.com%2F1178%2F3e0a1006-d1c7-45ae-a60d-36ddbeca2ca9-201498342%2Fresized-preview.png" alt="A girl holding a sweater">
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <h2 class="hacm__title">Reduce Waste, Recreate!</h2>
+                  <p class="hacm__desc">
+                    Uncontrolled textile waste harms the global environment, but unworn, unwanted clothing offers boundless, creative potential for re-use. Don’t just discard your cast-off clothes - unleash your imagination to breathe new life into them. Get ready to harness your creativity, revive your wardrobe and reduce the environmental footprint of your clothes.
+                  </p>
+                  <div class="hacm__img">
+                    <img src="https://www.lg.com/content/dam/lge/gb/home-page/block-banners/02_ST0044_block_image.png" alt="A girl holding a box of clothes">
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <h2 class="hacm__title">Denim Transformation: Pet Play!</h2>
+                  <p class="hacm__desc">
+                    Why not turn worn-out jeans into a fun tug-toy for a furry friend? A few simple cuts and braids will breathe fresh life into old favourites - and delight your pet with a new plaything. Let’s get started on the upcycling journey and keep discarded clothing in active usage!
+                  </p>
+                  <div class="hacm__img">
+                    <img src="https://www.lg.com/content/dam/lge/gb/home-page/block-banners/lg_experience_st0044_desktop.jpg" alt="A girl using a sewing machine">
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <h2 class="hacm__title">Discover the Hidden Delights of Mindful Wearing</h2>
+                  <div class="hacm__img">
+                    <img src="https://www.lg.com/content/dam/lge/gb/home-page/block-banners/lg_experience_st0044_desktop%202.jpg" alt="A girl holding a sweater">
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+            </div>
+          </div>
+      </div>
+      <div id="scroll-section-7" class="scroll-section" data-index="7" data-type="sticky" data-heightNum="5">
+         <div class="static-obj-scroll">  
+            <div class="static-obj-sticky">
+               <div class="static-obj-img">
+                  <div class="static-obj-area">
+                     <div class="static-img-item item-a">
+                        <picture><img data-src="https://assets-global.website-files.com/633ed9a1fb6cbca86c703f51/636d82dbaa9e993a9c4dc3d0_honey-mamas.jpg" /></picture>
+                     </div>
+                     <div class="static-img-item item-b" data-height='[0, 100, { "start": "0.2", "end": "0.5" }]'>
+                        <picture><img data-src="https://assets-global.website-files.com/632c6aea3c0d4513d89b5083/64b577ed0325edaf2610b177_Screenshot%202023-07-17%20at%2010.18.24%20AM.png" /></picture>
+                     </div>
+                     <div class="static-img-item item-c" data-height='[0, 100, { "start": "0.6", "end": "0.9" }]'>
+                        <picture><img data-src="https://assets-global.website-files.com/633ed9a1fb6cbca86c703f51/636d80c94b49b678d450464e_autocamp.jpg" /></picture>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="scroll-section-8" class="scroll-section" data-index="8" data-type="sticky" data-heightNum="5">
+         <h1 class="sticky-elem tit">Section 9</h1>      
+         <div class="static-obj-sticky">
+            <div class="static-obj-img">
+               <div class="static-obj-area">
+                  <div class="static-img-item item-a" data-width='[100, 40, { "start": "0.2", "end": "0.5" }]' data-height='[100, 40, { "start": "0.2", "end": "0.5" }]' data-radius='[0, 20, { "start": "0.2", "end": "0.5" }]'>
+                     <picture>
+                        <!-- <source media="(max-width: 768px)" srcset="/content/dam/lge/gb/tvs/block-banners/PD0046-1-banner-01-M.jpg">
+                        <source media="(min-width: 769px)" srcset="/content/dam/lge/gb/tvs/block-banners/PD0046-1-banner-01-D.jpg"> -->
+                        <img src="https://assets-global.website-files.com/633ed9a1fb6cbca86c703f51/636d824f5f2ba996864162f7_jam-cellars.jpg" data-translateX-in='[0, 10, { "start": "0.2", "end": "0.5" }]' data-translateY-in='[0, 50, { "start": "0.2", "end": "0.5" }]' alt="An image of LG OLED evo G3 on the wall of a modern and quirky New York City apartment with a romantic night scene playing on the screen.  10 Year World's No.1 OLED TV emblem. " loading="" aria-hidden="true">
+                     </picture>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="static-obj-content">
+            <div class="static-obj-section">
+               <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
+               <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+               <h2>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+               <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+               <h2>1914 translation by H. Rackham</h2>
+               <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
+            </div>
+            <div class="static-obj-section">
+               <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
+               <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+               <h2>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+               <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+               <h2>1914 translation by H. Rackham</h2>
+               <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
+            </div>
+            <div class="static-obj-section">
+               <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
+               <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+               <h2>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+               <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+               <h2>1914 translation by H. Rackham</h2>
+               <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
+            </div>
+         </div>
+      </div>
+   </div>   
+   <script>
+      const ui = {};
+
+      ui.fnScrollMotion = (() => {
+
+         let yOffset = 0;         
+         let prevScrollHeight = 0;
+         let enterNewScene = false; // 새로운 scene이 시작된 순간 true
+         let acc = 0.2;
+         let delayedYOffset = 0;
+         let yDirection = null;
+         let sceneInfo = null;
+         let currentIndex = 0;
+         let currentScene = null;
+         let timeInterval = 0;
+         let rafId;
+         let rafState;
+         let threshold = window.innerHeight * 0.7;
+
+         const hasElementsNum = (className) => {
+            return document.querySelectorAll(className);
+         }
+
+         function init(){            
+            
+            setLayout();
+            setObserver();
+            attachEvents();
+
+            console.log('init...');
+         }
+
+         function attachEvents(){
+
+            window.addEventListener('scroll', () => {
+               yDirection = yOffset > window.pageYOffset ? 'up' : 'down';
+               yOffset = currentIndex > 0 ? window.pageYOffset + threshold : window.pageYOffset;
+               setActiveScene();
+               // console.log('yDirection', yDirection);
+
+               if(!rafState){
+                  rafId = requestAnimationFrame(loop);
+                  rafState = true;
+               }
+            });  
+
+            window.addEventListener('resize', () => {
+               setLayout();
+            });
+
+         }
+
+         // 레이아웃 설정
+         function setLayout(){
+            sceneInfo = [...hasElementsNum('.scroll-section')];
+
+            // type이 sticky인 스크롤 섹션의 높이 세팅
+            sceneInfo.forEach((section, index) => {
+              if(section.dataset.type === 'sticky'){
+                  const scrollHeight = JSON.parse(section.dataset.heightnum) * window.innerHeight;
+                  section.style.height = `${scrollHeight}px`;
+               }  
+               
+               if(index == 5){
+                  [...section.querySelectorAll('.static-obj-content')].forEach((objContent, idx) => {
+                    const staticContentHeight = objContent.clientHeight;
+                    section.querySelectorAll('.static-obj-sticky')[idx].style.height = `${staticContentHeight}px`;
+                  });
+               }                              
+               
+            });
+            
+            yOffset = currentIndex > 0 ? window.pageYOffset + threshold : window.pageYOffset;
+            
+            let totalScrollHeight = 0;
+            for(let i=0; i<sceneInfo.length; i++){
+               totalScrollHeight += sceneInfo[i].scrollHeight;
+               if(totalScrollHeight >= yOffset){
+                  currentIndex = i;
+                  break;
+               }
+            }
+
+            document.body.setAttribute('id', `show-scene-${currentIndex}`);
+            setActiveScene();
+         }         
+
+         // 감시자 설정
+         function setObserver(){
+            // 인터렉션 관찰
+            [...hasElementsNum('[ data-cmp-effect]')].forEach((element) => {
+               callByObserver({target: element, showCallback: addShow, keepObserver:false, options:{ threshold: 0.7 } });
+            });
+
+            // 레이지로드 관찰
+            [...hasElementsNum('[data-src]')].forEach((element) => {
+               callByObserver({target: element, showCallback: setLazyload, keepObserver:false, options:{ rootMargin: '0px 0px 50px 0px', threshold: 0 } });
+            });
+
+            // 동영상 관찰
+            [...hasElementsNum('[data-observe]')].forEach((video) => {
+               callByObserver({target: video, showCallback: playVideo, hideCallback: pauseVideo, keepObserver:true, options:{ rootMargin: '0px 0px 0px 0px', threshold: 0.2 } });
+            });
+         }
+
+         function loop(){
+            delayedYOffset = delayedYOffset + (yOffset - delayedYOffset) * acc;
+
+            currentYOffset = delayedYOffset - prevScrollHeight;
+            
+            console.log('delayedYOffset', delayedYOffset);
+            rafId = requestAnimationFrame(loop);
+
+            if(Math.abs(yOffset - delayedYOffset) < 1){
+               cancelAnimationFrame(rafId);
+               rafState = false;
+            }
+         }
+
+         // 현재 스크롤된 Section으로 active 및 index 설정
+         function setActiveScene(){
+            prevScrollHeight = 0;
+                            
+            [...hasElementsNum('.scroll-section')].forEach((section) => {
+               let yPos = section.getBoundingClientRect().top;
+               if(yPos < threshold){
+                  currentIndex = Number(section.dataset.index);
+                  currentScene = section;
+               }
+            });
+
+            sceneInfo.filter((scene, i) => {
+               if(i < currentIndex){
+                  prevScrollHeight += scene.scrollHeight;
+               }
+            });
+
+            if(!currentScene) return false;
+
+            if(!currentScene.classList.contains('active')){
+
+               if(currentIndex == '0'){
+                  const heroItems = currentScene.querySelectorAll('.hero-item');
+                  let cnt = 0;
+
+                  timeInterval = setInterval(() => {
+                     if(cnt == heroItems.length) cnt = 0;
+                     heroItems[cnt].classList.add('fade-in');
+
+                     if(cnt > 0) heroItems[cnt-1].classList.remove('fade-in');
+                     if(cnt < heroItems.length-1) heroItems[cnt+1].classList.remove('fade-in');
+                     if(cnt == 0) heroItems[heroItems.length-1].classList.remove('fade-in');
+
+                     cnt++;
+                  }, 3000);
+               }else{
+                  clearInterval(timeInterval);
+               }
+
+               document.body.setAttribute('id', `show-scene-${currentIndex}`);
+               
+            } else {
+              playAnimation(currentIndex);
+            }
+         
+            [...hasElementsNum('.scroll-section')].forEach(section => section.classList.remove('active'));
+            currentScene.classList.add('active');  
+            
+            [...hasElementsNum('#navbar li')].forEach(nav => nav.classList.remove('active'));
+            hasElementsNum('#navbar li')[currentIndex].classList.add('active');  
+         }
+
+         // 스크롤 애니메이션
+         function playAnimation(currentIndex){
+               const currentYOffset = yOffset - prevScrollHeight;
+               const scrollRatio = currentYOffset / sceneInfo[currentIndex].scrollHeight;
+                              
+               // console.log('scrollRatio', scrollRatio);
+
+               switch (currentIndex) {
+                  case 0:  
+                     console.log('1 play');
+
+                     const messageA = currentScene.querySelector('.main-message.txt-a');   
+                     const messageAOpacityIn = JSON.parse(messageA.dataset.opacityIn);
+                     const messageAOpacityOut = JSON.parse(messageA.dataset.opacityOut);
+                     const messageATranslateyIn = JSON.parse(messageA.dataset.translateyIn);
+                     const messageATranslateyOut = JSON.parse(messageA.dataset.translateyOut);
+
+                     const messageB = currentScene.querySelector('.main-message.txt-b');
+                     const messageBOpacityIn = JSON.parse(messageB.dataset.opacityIn);
+                     const messageBOpacityOut = JSON.parse(messageB.dataset.opacityOut);
+                     const messageBTranslateyIn = JSON.parse(messageB.dataset.translateyIn);
+                     const messageBTranslateyOut = JSON.parse(messageB.dataset.translateyOut);
+
+                     const heroImg = currentScene.querySelector('.hero-img');
+                     const heroImgOpacityOut = JSON.parse(heroImg.dataset.opacityOut);
+                     const heroImgZoomIn = JSON.parse(heroImg.dataset.zoomIn);
+                     
+                     if (scrollRatio <= 0.35) {
+                        messageA.style.opacity = calcValues(messageAOpacityIn, currentYOffset);  
+                        messageA.style.transform = `translate3d(0, ${calcValues(messageATranslateyIn, currentYOffset)}%, 0)`;
+                     }else{
+                        messageA.style.opacity = calcValues(messageAOpacityOut, currentYOffset);  
+                        messageA.style.transform = `translate3d(0, ${calcValues(messageATranslateyOut, currentYOffset)}%, 0)`;
+                     }
+
+                     if (scrollRatio <= 0.67) {
+                        messageB.style.opacity = calcValues(messageBOpacityIn, currentYOffset);  
+                        messageB.style.transform = `translate3d(0, ${calcValues(messageBTranslateyIn, currentYOffset)}%, 0)`;
+                     }else{
+                        messageB.style.opacity = calcValues(messageBOpacityOut, currentYOffset);  
+                        messageB.style.transform = `translate3d(0, ${calcValues(messageBTranslateyOut, currentYOffset)}%, 0)`;
+                     }
+
+                     if(scrollRatio >= 0.1){
+                        heroImg.style.transform = `scale(${calcValues(heroImgZoomIn, currentYOffset)})`;
+                     }
+                     if(scrollRatio >= 0.55){
+                        heroImg.style.opacity = calcValues(heroImgOpacityOut, currentYOffset);  
+                     }
+
+                     if(scrollRatio > 0.12){
+                        currentScene.querySelector('.main-message.title').classList.add('fade-out');
+                     }
+
+                     if(scrollRatio <= 0.1){
+                        currentScene.querySelector('.main-message.title').classList.remove('fade-out');
+                     }
+                     break;
+
+                  case 1:
+                     // console.log('2 play');
+                     break;
+
+                  case 2:
+                     // console.log('3 play');
+                     break;
+
+                  case 3:
+                    // console.log('4 play');
+                    break;
+
+                  case 4:
+                    // console.log('5 play');
+                    break;
+
+                  case 5:
+                    console.log('6 play');
+                    break;
+
+                  case 6:
+                    console.log('7 play');
+                    break;                    
+
+                  case 7:
+                    console.log('8 play');
+
+                     const scrollImgB = document.querySelector('.static-img-item.item-b');
+                     const scrollImgBHeight = JSON.parse(scrollImgB.dataset.height);
+                     const scrollImgC = document.querySelector('.static-img-item.item-c');
+                     const scrollImgCHeight = JSON.parse(scrollImgC.dataset.height);
+
+                     console.log('scrollRatio', scrollRatio);
+
+                     if(scrollRatio <= 0.52){
+                        scrollImgB.style.height = `${calcValues(scrollImgBHeight, currentYOffset)}vh`;
+                     }
+
+                     if(scrollRatio <= 0.92){
+                        scrollImgC.style.height = `${calcValues(scrollImgCHeight, currentYOffset)}vh`;
+                     }
+
+                    break; 
+                                           
+                  case 8:
+                     console.log('9 play');
+
+                     sceneInfo[currentIndex].scrollItemA = currentScene.querySelector('.static-img-item.item-a');
+                     sceneInfo[currentIndex].imgA = sceneInfo[currentIndex].scrollItemA.querySelector('img');
+                     sceneInfo[currentIndex].datalists = {};
+
+                     const { scrollItemA, imgA } = sceneInfo[currentIndex]
+                     const { width, height } = getDataLists(scrollItemA, currentIndex);
+                     const { translatexIn, translateyIn, radius } = getDataLists(imgA, currentIndex);
+
+                     if(scrollRatio <= 0.52){
+                        scrollItemA.style.width = `${calcValues(width, currentYOffset)}vw`;
+                        scrollItemA.style.height = `${calcValues(height, currentYOffset)}vh`;
+                        imgA.style.transform = `translate3d(${calcValues(translatexIn, currentYOffset)}%, ${calcValues(translateyIn, currentYOffset)}%, 0)`;
+                        imgA.style.borderRadius = `${calcValues(radius, currentYOffset)}px`;
+                     }
+               }
+         }
+         
+         // 스크롤 비율에 따른 값 연산
+         function calcValues(values, currentYOffset){
+               let rv;
+               const lastScene = currentIndex === (sceneInfo.length-1);
+               const scrollHeight = lastScene ? sceneInfo[currentIndex].scrollHeight - window.innerHeight : sceneInfo[currentIndex].scrollHeight;
+               const scrollRatio = currentYOffset / scrollHeight;
+
+               // values의 타이밍속성이 3번째 있는지 분기처리
+               if (values.length === 3) {
+                  // start ~ end 사이에 애니메이션 실행
+                  const partScrollStart = JSON.parse(values[2].start) * scrollHeight;
+                  const partScrollEnd = JSON.parse(values[2].end) * scrollHeight;
+                  const partScrollHeight = partScrollEnd - partScrollStart;
+
+                  if (currentYOffset >= partScrollStart && currentYOffset <= partScrollEnd) {
+                     rv = (currentYOffset - partScrollStart) / partScrollHeight * (values[1] - values[0]) + values[0];
+                  } else if (currentYOffset < partScrollStart) {
+                     rv = values[0];
+                  } else if (currentYOffset > partScrollEnd) {
+                     rv = values[1];
+                  }
+               } else {
+                  rv = scrollRatio * (values[1] - values[0]) + values[0];
+               }                
+
+               return rv;
+         }
+
+         function getDataLists(element, index){
+            for (let key in element.dataset){
+               sceneInfo[index].datalists[`${key}`] = JSON.parse(element.dataset[key]);
+            }
+
+            return sceneInfo[index].datalists;
+         }
+
+         function addShow(element){
+            element.classList.add('fade-in');
+         }
+
+         function setLazyload(image){
+            image.src = image.dataset.src
+         }
+
+         // 동영상 재생
+         function playVideo(video){
+            const isPaused = video.paused;
+            const videoSrc = video.querySelector('source');
+
+            if (!videoSrc.getAttribute('src').length) {
+               videoSrc.setAttribute('src', videoSrc.dataset.src);
+
+               video.load();
+               video.dataset.loaded = true
+            }
+
+            // 일시 정지 상태이면 영상을 실행한다
+            isPaused && video.play();
+         }
+
+         // 동영상 일시정지
+         function pauseVideo(video){
+            const isPaused = video.paused;
+
+            if (!isPaused) {
+               // 재생중이면 영상을 일시정지 한다.
+               video.pause();
+            }
+         }
+
+         function callByObserver(params) {
+            let { target, showCallback, hideCallback, keepObserver, options } = params;
+
+            let defaults = {
+               ...{
+                  root: null,
+                  rootMargin: '0px 0px 0px 0px',
+                  threshold: 1.0
+               }, ...options
+            };
+
+            let callback = (entries, observer) => {
+               entries.forEach(entry => {
+                  const { intersectionRatio: currentRatio, isIntersecting } = entry;
+
+                  if(isIntersecting){
+                     if(showCallback && typeof showCallback == 'function'){
+                        showCallback(entry.target);
+                     }
+                     !keepObserver && observer.unobserve(entry.target);
+                  } else {                     
+                     if(hideCallback && typeof hideCallback == 'function'){
+                        hideCallback(entry.target);
+                     }
+                  }
+               });
+            }
+
+            let observer = new IntersectionObserver(callback, defaults);
+            observer.observe(target);
+         }
+
+         return {
+            init
+         }
+      })();
+
+      window.addEventListener('load', () => {
+         ui.fnScrollMotion.init();
+
+			const bannerSwiper = new Swiper('.hacm__swiper .swiper', {
+				autoHeight : true,
+				pagination: {
+					el: '.swiper-pagination',
+					type: 'fraction'
+				},
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				}
+			});
+
+      });
+   </script>    
+</body>
+</html>
